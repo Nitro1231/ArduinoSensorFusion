@@ -1,2 +1,2 @@
 # ArduinoSensorFusion
-Arduino 9-DOF Sensor Fusion with MPU9250 and GPS Module.
+The main goal of this project is to create a 9-DOF Sensor Fusion by using MPU9250 and GPS Module and constantly updating such Madgwick filtered data via API call by using NodeMCU.
