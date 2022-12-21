@@ -1,0 +1,12 @@
+NodeMCU Board Requirements:
+1. Arduino IDE -> File -> Preferences
+2. Find the "Additional Boards Manager URLs" textbox and add the following URL:
+	http://arduino.esp8266.com/stable/package_esp8266com_index.json
+3. Arduino IDE -> Tools -> Board -> Boards Manager
+4. Search for ESP8266 and install "ESP8266 by ESP8266 Community"
+
+Library Requirements:
+1. Arduino IDE -> Sketch -> Include Library -> Manage Libraries
+2. Install the following libraries:
+ - Arduino_JSON (by Arduino): https://github.com/arduino-libraries/Arduino_JSON
+ - MPU9250 (by hideakitai): https://github.com/hideakitai/MPU9250
