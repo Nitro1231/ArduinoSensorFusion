@@ -494,6 +494,12 @@ public:
         a[1] = (float)raw_acc_gyro_data[1] * acc_resolution;
         a[2] = (float)raw_acc_gyro_data[2] * acc_resolution;
 
+        // Add accelerometer calibration code. Thanks to RobertJN64.
+        // https://github.com/hideakitai/MPU9250/issues/88#issue-1365316736
+        a[0] -= acc_bias[0] * 2 / 32768.f; //handle calibration
+        a[1] -= acc_bias[1] * 2 / 32768.f;
+        a[2] -= acc_bias[2] * 2 / 32768.f;
+
         temperature_count = raw_acc_gyro_data[3];                  // Read the adc values
         temperature = ((float)temperature_count) / 333.87 + 21.0;  // Temperature in degrees Centigrade
 

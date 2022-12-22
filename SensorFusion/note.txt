@@ -9,4 +9,6 @@ Library Requirements:
 1. Arduino IDE -> Sketch -> Include Library -> Manage Libraries
 2. Install the following libraries:
  - Arduino_JSON (by Arduino): https://github.com/arduino-libraries/Arduino_JSON
+
+* The following libraries are already included in the project file due to the customization:
  - MPU9250 (by hideakitai): https://github.com/hideakitai/MPU9250
