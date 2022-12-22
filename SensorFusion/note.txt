@@ -1,14 +1,24 @@
+NodeMCU Pin Map:
+	NodeMCU		<->		MPU9250
+	3v3			---		VCC
+	GND			---		GND
+	D1 (SCL)	---		SCL
+	D2 (SDA)	---		SDA
+
 NodeMCU Board Requirements:
-1. Arduino IDE -> File -> Preferences
-2. Find the "Additional Boards Manager URLs" textbox and add the following URL:
-	http://arduino.esp8266.com/stable/package_esp8266com_index.json
-3. Arduino IDE -> Tools -> Board -> Boards Manager
-4. Search for ESP8266 and install "ESP8266 by ESP8266 Community"
+	1. Arduino IDE -> File -> Preferences
+	2. Find the "Additional Boards Manager URLs" textbox and add the following URL:
+		http://arduino.esp8266.com/stable/package_esp8266com_index.json
+	3. Arduino IDE -> Tools -> Board -> Boards Manager
+	4. Search for ESP8266 and install "ESP8266 by ESP8266 Community"
 
 Library Requirements:
-1. Arduino IDE -> Sketch -> Include Library -> Manage Libraries
-2. Install the following libraries:
- - Arduino_JSON (by Arduino): https://github.com/arduino-libraries/Arduino_JSON
+	1. Arduino IDE -> Sketch -> Include Library -> Manage Libraries
+	2. Install the following libraries:
+	- ArduinoOSC (by hideakitai): https://github.com/hideakitai/ArduinoOSC
+	- Arduino_JSON (by Arduino): https://github.com/arduino-libraries/Arduino_JSON
 
-* The following libraries are already included in the project file due to the customization:
- - MPU9250 (by hideakitai): https://github.com/hideakitai/MPU9250
+	* The following libraries are already included in the project file due to the customization:
+	- MPU9250 (by hideakitai): https://github.com/hideakitai/MPU9250
+
+
