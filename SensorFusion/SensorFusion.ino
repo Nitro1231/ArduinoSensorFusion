@@ -12,36 +12,17 @@ struct Quat {
   float w;
 } quat;
 
-struct Euler {
-  float x;
-  float y;
-  float z;
-} euler;
-
-struct RPY {
-  float r;
-  float p;
-  float y;
-} rpy;
-
-struct LinAcc {
-  float x;
-  float y;
-  float z;
-} linAcc;
-
-struct LinVel {
+struct Vec {
   float x = 0;
   float y = 0;
   float z = 0;
-} linVel;
+} euler, rpy, acc, accBias, linAcc, linAccBias, linVel, pos;
 
-struct Pos {
-  float x = 0;
-  float y = 0;
-  float z = 0;
-} pos;
 
+// AVC(Active Vibration Cancellation)
+// RHA(Robust Heading Algorithm)
+// RAA(Robust Attitude Algorithm)
+// AGC(Auto Gyroscope Calibaration)
 
 
 void setup() {
@@ -75,13 +56,25 @@ void setup() {
   delay(5000);
   mpu.calibrateAccelGyro();
 
-  Serial.println("Mag calibration will start in 5sec.");
-  Serial.println("Please Wave device in a figure eight until done.");
-  delay(5000);
-  mpu.calibrateMag();
+  // Serial.println("Mag calibration will start in 5sec.");
+  // Serial.println("Please Wave device in a figure eight until done.");
+  // delay(5000);
+  // mpu.calibrateMag();
 
   print_calibration();
   mpu.verbose(false);
+
+
+  for (int i = 0; i <= 100; i++) {
+    mpu.update();
+    accBias.x = (accBias.x + mpu.getAccX()) / 2;
+    accBias.y = (accBias.y + mpu.getAccY()) / 2;
+    accBias.z = (accBias.z + mpu.getAccZ()) / 2;
+    linAccBias.x = (linAccBias.x + mpu.getLinearAccX()) / 2;
+    linAccBias.y = (linAccBias.y + mpu.getLinearAccY()) / 2;
+    linAccBias.z = (linAccBias.z + mpu.getLinearAccZ()) / 2;
+    delay(10);
+  }
 
 
   // OscWiFi.publish(OSC_SERVER_HOST, OSC_SERVER_PORT, "/quat", quat.x, quat.y, quat.z, quat.w);
@@ -110,22 +103,26 @@ void loop() {
     // quat.z = mpu.getQuaternionZ();
     // quat.w = mpu.getQuaternionW();
 
-    euler.x = mpu.getEulerX();
-    euler.y = mpu.getEulerY();
-    euler.z = mpu.getEulerZ();
+    // euler.x = mpu.getEulerX();
+    // euler.y = mpu.getEulerY();
+    // euler.z = mpu.getEulerZ();
   
     // rpy.r = mpu.getRoll();
     // rpy.p = mpu.getPitch();
     // rpy.y = mpu.getYaw();
 
-    linAcc.x = mpu.getLinearAccX();
-    linAcc.y = mpu.getLinearAccY();
-    linAcc.z = mpu.getLinearAccZ();
+    acc.x = mpu.getAccX() - accBias.x;
+    acc.y = mpu.getAccY() - accBias.y;
+    acc.z = mpu.getAccZ() - accBias.z;
+
+    linAcc.x = mpu.getLinearAccX() - linAccBias.x;
+    linAcc.y = mpu.getLinearAccY() - linAccBias.y;
+    linAcc.z = mpu.getLinearAccZ() - linAccBias.z;
 
     unsigned long timeDiff = currTime - prevTime;
-    linVel.x += mpu.getLinearAccX() * timeDiff / 1000;
-    linVel.y += mpu.getLinearAccY() * timeDiff / 1000;
-    linVel.z += mpu.getLinearAccZ() * timeDiff / 1000;
+    linVel.x += acc.x * timeDiff / 1000;
+    linVel.y += acc.y * timeDiff / 1000;
+    linVel.z += acc.z * timeDiff / 1000;
 
     pos.x += linVel.x * timeDiff / 1000;
     pos.y += linVel.y * timeDiff / 1000;
@@ -163,18 +160,18 @@ void print_roll_pitch_yaw() {
 
 void print_acc() {
   Serial.print("AccX, AccY, AccZ: ");
-  Serial.print(mpu.getAccX(), 2);
+  Serial.print(acc.x, 2);
   Serial.print(", ");
-  Serial.print(mpu.getAccY(), 2);
+  Serial.print(acc.y, 2);
   Serial.print(", ");
-  Serial.print(mpu.getAccZ(), 2);
+  Serial.print(acc.z, 2);
   Serial.print("  ");
   Serial.print("lin_acc = ");
-  Serial.print(mpu.getLinearAccX(), 2);
+  Serial.print(linAcc.x, 2);
   Serial.print(", ");
-  Serial.print(mpu.getLinearAccY(), 2);
+  Serial.print(linAcc.y, 2);
   Serial.print(", ");
-  Serial.println(mpu.getLinearAccZ(), 2);
+  Serial.println(linAcc.z, 2);
 }
 
 
