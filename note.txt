@@ -22,3 +22,7 @@ Library Requirements:
 	- MPU9250 (by hideakitai): https://github.com/hideakitai/MPU9250
 
 
+About the UnityVisualization Project:
+	- extOSC v1.20.1 (by Iam1337): https://github.com/Iam1337/extOSC
+
+
